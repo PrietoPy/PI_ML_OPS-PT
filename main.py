@@ -1,29 +1,15 @@
-
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=['*'],
-    allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
-)
-
 import pandas as pd
+
+app=FastAPI()
 
 games = pd.read_parquet('./Datasets/gamesv5.parquet')
 reviews = pd.read_parquet('./Datasets/reviews.parquet')
 items = pd.read_parquet('./Datasets/itemsv2.parquet')
 
 generos = list(games.drop(columns=['item_id','release_date']).columns)
-
 ids =pd.read_csv('./Datasets/idsnv2.csv')
-
 iid=list(set(items['item_id']))
-
 lanio=list(set(reviews['posted'].to_list()))
 
 @app.get('/')
@@ -41,7 +27,7 @@ async def PlayTimeGenre(genero:str):
     df_horas_ordenado = df_horas.sort_values(by='playtime_forever', ascending=False)
     resultado=df_horas_ordenado.head(1)
     prin = "Año de lanzamiento con más horas jugadas para Género " + genero
-    anio = int(resultado['release_date'])
+    anio = int(resultado['release_date'].iloc[0])
     return {prin : anio}
   else:
     return {"El Genero indicado no se encuentra en la base de datos":genero}

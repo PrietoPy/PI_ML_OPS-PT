@@ -1,1 +1,3 @@
-/venv
+/pi-mlops-api
+/.ipynb_checkpoints
+/__pycache__
