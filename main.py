@@ -12,9 +12,11 @@ app=FastAPI()
 
 games = pd.read_parquet('./Datasets/gamesv5.parquet')
 reviews = pd.read_parquet('./Datasets/reviews.parquet')
-items = pd.read_parquet('./Datasets/itemsv2.parquet')
+items = pd.read_parquet('./Datasets/itemsv3.parquet')
 
 generos = list(games.drop(columns=['item_id','release_date']).columns)
+gnames = pd.read_csv('./Datasets/gnames.csv')
+unames = pd.read_csv('./Datasets/unames.csv')
 ids =pd.read_csv('./Datasets/idsnv2.csv')
 iid=list(set(items['item_id']))
 lanio=list(set(reviews['posted'].to_list()))
@@ -46,17 +48,19 @@ async def UserForGenre(genero:str):
     dfgames = games[['item_id','release_date',genero]]
     dfgames = dfgames[games[genero]==1]
     dfuserg = pd.merge(dfgames,items,on='item_id',how='inner')
-    uhoras = dfuserg.groupby('user_id')['playtime_forever'].sum().reset_index()
+    uhoras = dfuserg.groupby('uid_user')['playtime_forever'].sum().reset_index()
     uhoras = uhoras.sort_values(by='playtime_forever', ascending=False)
     uhoras = uhoras.head(1)
-    uhoras = uhoras['user_id'].iloc[0]
-    dfuserg = dfuserg[dfuserg['user_id']==uhoras]
+    uhoras = uhoras['uid_user'].iloc[0]
+    dfuserg = dfuserg[dfuserg['uid_user']==uhoras]
     dfuserg = dfuserg.groupby('release_date')['playtime_forever'].sum().reset_index()
     dfuserg = dfuserg.sort_values(by='release_date', ascending=False)
     dfuserg = dfuserg[dfuserg['playtime_forever']>0]
     dfuserg = dfuserg.astype(int)
     dfuserg.rename(columns={'release_date': 'Año', 'playtime_forever':'Horas'}, inplace=True)
     di = dfuserg.apply(lambda row: row.to_dict(), axis=1).tolist()
+    uhoras = unames[unames['uid_user']==uhoras]
+    uhoras = uhoras['user_id'].iloc[0]
     prin="Usuario con más horas jugadas para Género " + genero
     return {prin:uhoras,"Horas Jugadas":di}
   else:
@@ -71,7 +75,7 @@ async def UsersRecommend(anio:int):
     top_games = dfa.head(3)['item_id'].to_list()
     for i,g in enumerate(top_games):
       if g in iid:
-        top_games[i]=items[items['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
+        top_games[i]=gnames[gnames['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
       else:
         top_games[i]=ids[ids['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
     return{'Puesto 1':top_games[0],'Puesto 2':top_games[1],'Puesto 3':top_games[2]}
@@ -88,7 +92,7 @@ async def UsersNotRecommend(anio:int):
     top_games = dfa.head(3)['item_id'].to_list()
     for i,g in enumerate(top_games):
       if g in iid:
-        top_games[i]=items[items['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
+        top_games[i]=gnames[gnames['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
       else:
         top_games[i]=ids[ids['item_id'] == top_games[i]].head(1)['item_name'].iloc[0]
     if len(top_games)<2:
