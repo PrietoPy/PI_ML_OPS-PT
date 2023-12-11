@@ -1,5 +1,11 @@
 from fastapi import FastAPI
 import pandas as pd
+from dotenv import load_dotenv
+
+# Carga las variables de entorno desde el archivo .env
+load_dotenv()
+
+mi_secreto = os.getenv("MI_SECRETO")
 
 app=FastAPI()
 
