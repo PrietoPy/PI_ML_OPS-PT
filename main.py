@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
 from dotenv import load_dotenv
+import os
 
 # Carga las variables de entorno desde el archivo .env
 load_dotenv()
