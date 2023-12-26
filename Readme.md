@@ -65,19 +65,19 @@ Este proyecto consiste en la implementación de una API utilizando el framework 
      
      - Haga click en la funcionalidad deseada, en este caso `PlayTimeGenre`.
        
-       <img src="./src/FastAPIu.png">
+       <img src="src/FastAPIu.PNG">
      
      - Haga click `Try it out` y luego ingrese el genero deseado.
        
-       <img src="./src/FastAPId.png">
+       <img src="src/FastAPId.PNG">
      
      - Haga click en `Execute`.
        
-       <img src="./src/FastAPIt.png">
+       <img src="src/FastAPIt.PNG">
      
      - El resultado de la consulta estara en el recuadro debajo de `Response body`.
        
-       <img src="./src/FastAPIc.png">
+       <img src="src/FastAPIc.PNG">
 
 ### Soporte
 
