@@ -1,8 +1,6 @@
 # Proyecto Individual MLops - Sistema de Recomendación de Steam
 
-<img src="src/Steam.png" alt="Steam" width="200" height="120">
-<img src="src/FastAPI.png" alt="FastAPI" width="220" height="120">
-<img src="src/Render.png" alt="Render" width="220" height="150">
+<img src="src/Steam.png" alt="Steam" width="200" height="120"><img src="src/FastAPI.png" alt="FastAPI" width="220" height="120"><img src="src/Render.png" alt="Render" width="220" height="150">
 
 ## Descripción
 
@@ -67,19 +65,19 @@ Este proyecto consiste en la implementación de una API utilizando el framework 
      
      - Haga click en la funcionalidad deseada, en este caso `PlayTimeGenre`.
        
-       <img src="src/FA1.png" alt="FastAPI1">
+         ![FastAPI1](src/FA1.png)
      
      - Haga click `Try it out` y luego ingrese el genero deseado.
        
-       <img src="src/FA2.png" alt="FastAPI2">
+         ![FastAPI2](src/FA2.png)
        
        - Haga click en `Execute`.
          
-         <img src="src/FA3.png" alt="FastAPI3">
+          ![FastAPI3](src/FA3.png)
      
      - El resultado de la consulta estara en el recuadro debajo de `Response body`.
        
-       <img src="src/FA4.png" alt="FastAPI4">
+         ![FastAPI4](src/FA4.png)
 
 ### Soporte
 
