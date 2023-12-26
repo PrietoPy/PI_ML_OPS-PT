@@ -10,7 +10,7 @@ load_dotenv()
 
 mi_secreto = os.getenv("MI_SECRETO")
 
-app=FastAPI()
+app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"})
 
 games = pd.read_parquet('./Datasets/gamesoh.parquet')
 reviews = pd.read_parquet('./Datasets/reviews.parquet')
