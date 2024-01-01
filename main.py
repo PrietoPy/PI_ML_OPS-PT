@@ -168,7 +168,7 @@ async def recomendacion_juego(idg:int):
     y devuelve un top 5 de juegos recomendados (similares).
     '''
     if (idg in lid) or (idg in lfid): #consultamos si el id se encuentra en el Dataset
-        gx=pd.DataFrame(games.loc[idg]) obtenemos el DF del juego ingresado
+        gx=pd.DataFrame(games.loc[idg]) # obtenemos el DF del juego ingresado
         gx=pd.pivot_table(gx,columns=['item_id', '2D', 'ACTION', 'ADVENTURE', 'ANIME', 'ARCADE',
        'ATMOSPHERIC', 'CASUAL', 'CLASSIC', 'CO-OP', 'COMEDY', 'CUTE',
        'DESIGN & ILLUSTRATION', 'DIFFICULT', 'EARLY ACCESS', 'EXPLORATION',
