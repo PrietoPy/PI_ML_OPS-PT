@@ -15,57 +15,7 @@ Este proyecto consiste en la implementación de una API utilizando el framework 
    - Transformación de generos a Formato Binario.
    - Análisis de sentimiento a las reseñas de usuarios.
    - Encontramos Juegos Similares mediante la similitud del coseno.
-   - Diccionario de datos (MVP):
-     
-     - `gamesoh.parquet`: contiene 61 columnas: 'item_id' del tipo entero corresponde al identificador unico de los juegos, 60 columnas categoricas (géneros) en binario.
-         #   Column                 Non-Null Count  Dtype   Descripción
-        ---  ------                 --------------  -----   -----------
-         0   item_id                29803 non-null  int32   Identificador unico de juego
-         1   2D                     29803 non-null  int8    Género
-         2   ACTION                 29803 non-null  int8    Género
-         3   ADVENTURE              29803 non-null  int8    Género
-         4   ANIME                  29803 non-null  int8    Género
-         ...
-         59  VIOLENT                29803 non-null  int8    Género
-         60  VISUAL NOVEL           29803 non-null  int8    Género
-         61  ZOMBIES                29803 non-null  int8    Género
-       
-     - `reviews.parquet`: contiene 5 columnas:
-         #   Column              Non-Null Count  Dtype   Descripción
-        ---  ------              --------------  -----   -----------
-         0   posted              59305 non-null  int32   Año de publicación de la reseña
-         1   item_id             59305 non-null  int32   Identificador unico de Juego
-         2   recommend           59305 non-null  bool    Indicador de recomendacion de usuario verdadero o falso
-         3   user_id             59305 non-null  int32   Identificador unico de usuario
-         4   sentiment_analysis  59305 non-null  int8    Analisis de sentimientos 0=Negativo, 1=Neutral, 2=Positivo
-       
-     - `itemso.parquet`: contiene 3 columnas:
-         #   Column            Dtype     Descripción
-        ---  ------            -----     ----------- 
-         0   item_id           int32     Identificador unico de Juego
-         1   playtime_forever  int32     Cantidad de Horas acumuladas por usuario por juego
-         2   user_id           int32     Identificador unico de usuario
-       
-     - `games.parquet`: contiene 3 columnas:
-         #   Column        Non-Null Count  Dtype   Descripción
-        ---  ------        --------------  -----   ----------- 
-         0   title         29802 non-null  object  Nombre del Juego
-         1   release_date  29803 non-null  int32   Fecha de lanzamiento del Juego
-         2   item_id       29803 non-null  int32   Identificador unico de Juego
-       
-     - `fnames.parquet`: contiene 2 columnas:
-         #   Column     Non-Null Count  Dtype   Descripción
-        ---  ------     --------------  -----   ----------- 
-         0   item_id    565 non-null    int32   Identificador unico de Juego
-         1   item_name  565 non-null    object  Nombre del Juego
-       
-     - `unames.parquet`: contiene 2 columnas:
-         #   Column     Non-Null Count  Dtype    Descripción
-        ---  ------     --------------  -----    -----------
-         0   user_id    87998 non-null  int32    Identificador unico de usuario
-         1   user_name  87998 non-null  object   Nombre de usuario
 
-       
 2. **Desarrollo de la API:**
    
    - Implementación de endpoints para realizar consultas específicas.
@@ -82,8 +32,9 @@ Este proyecto consiste en la implementación de una API utilizando el framework 
 
 4. **Análisis Exploratorio de Datos (EDA):**
    
-   - Exploración de relaciones entre variables, identificación de outliers y patrones interesantes en el conjunto de datos.
-   - Generación de nubes de palabras para comprender las palabras más frecuentes en los títulos de los juegos.
+   - El análisis de las reseñas de usuarios revela un pico de comentarios positivos en 2014, seguido de un descenso significativo en el siguiente año.
+   - Explorando el tiempo de juego por género, se observa un cambio ligero en el top. Los géneros Action, Multiplayer y CO-OP destacan tanto por las buenas reseñas como por la popularidad en horas de juego.
+   - Estos hallazgos sugieren que el desarrollo de un juego con estos géneros podría atraer una audiencia considerable. Sin embargo, la caída de reseñas en 2015 indica la necesidad de un análisis más actualizado para confirmar los géneros más demandados.
 
 5. **Modelo de Aprendizaje Automático:**
    

@@ -6,15 +6,77 @@
 
 Este proyecto consiste en la implementación de una API utilizando el framework FastAPI para ofrecer servicios mediante la plataforma de despliegue Render. Ofrece funcionalidades con datos de videojuegos de la plataforma Steam sobre análisis de sentimiento de reseñas de usuarios y sistemas de recomendación.
 
+Video presentación del proyecto y funciones: [link](https://drive.google.com/file/d/1BIPP_FYSZLwllkK2CkZSULbMETgV_OXw/view?usp=drive_link).
+
 ### Características Principales
 
 1. **Transformaciones y Feature Engineering:**
    
    - Lectura y manipulación de datos.
+   
    - Eliminación de columnas no necesarias para consultas o modelos.
+   
    - Transformación de generos a Formato Binario.
+   
    - Análisis de sentimiento a las reseñas de usuarios.
+   
    - Encontramos Juegos Similares mediante la similitud del coseno.
+   
+   - Diccionario de datos (MVP):
+     
+     - `gamesoh.parquet`: contiene 62 columnas: 'item_id' del tipo entero corresponde al identificador unico de los juegos, 61 columnas categoricas (géneros) en binario.
+     
+     | Columna   | Tipo  | Descripción                  |
+     | --------- | ----- | ---------------------------- |
+     | item_id   | int32 | Identificador unico de juego |
+     | 2D        | int8  | Género                       |
+     | ACTION    | int8  | Género                       |
+     | ADENTURE  | int8  | Género                       |
+     | ANIME     | int8  | Género                       |
+     | ...       | int8  | Género                       |
+     | VIOLENT   | int8  | Género                       |
+     | VISUAL N. | int8  | Género                       |
+     | ZOMBIES   | int8  | Género                       |
+     
+     - `reviews.parquet`: contiene 5 columnas.
+     
+     | Columna            | Tipo  | Descripción                                                |
+     | ------------------ | ----- | ---------------------------------------------------------- |
+     | posted             | int32 | Año de publicación de reseña                               |
+     | item_id            | int32 | Identificador unico de juego                               |
+     | recommend          | bool  | Indicador de recomendacion                                 |
+     | user_id            | int32 | Identificador unico de usuario                             |
+     | sentiment_analysis | int8  | Analisis de sentimientos 0=Negativo, 1=Neutral, 2=Positivo |
+     
+     - `itemso.parquet`: contiene 3 columnas.
+     
+     | Columna          | Tipo  | Descripción                              |
+     | ---------------- | ----- | ---------------------------------------- |
+     | item_id          | int32 | Identificador unico de juego             |
+     | playtime_forever | int32 | Cantidad de Horas acumuladas por usuario |
+     | user_id          | int32 | Identificador unico de usuario           |
+     
+     - `games.parquet`: contiene 3 columnas, con los nombres de los juegos.
+     
+     | Columna      | Tipo   | Descripción                    |
+     | ------------ | ------ | ------------------------------ |
+     | title        | object | Identificador unico de juego   |
+     | release_date | int32  | Fecha de lanzamiento del Juego |
+     | item_id      | int32  | Identificador unico de juego   |
+     
+     - `fnames.parquet`: contiene 2 columnas, con los nombres de los juegos obtenidos de la API oficial de Steam
+     
+     | Columna   | Tipo   | Descripción                  |
+     | --------- | ------ | ---------------------------- |
+     | item_id   | int32  | Identificador unico de juego |
+     | item_name | object | Nombre del juego             |
+     
+     - `unames.parquet`: contiene 2 columnas, con los nombres de los usuarios.
+     
+     | Columna   | Tipo   | Descripción                    |
+     | --------- | ------ | ------------------------------ |
+     | user_id   | int32  | Identificador unico de usuario |
+     | user_name | object | Nombre del usuario             |
 
 2. **Desarrollo de la API:**
    
@@ -32,9 +94,22 @@ Este proyecto consiste en la implementación de una API utilizando el framework 
 
 4. **Análisis Exploratorio de Datos (EDA):**
    
-   - Exploración de relaciones entre variables, identificación de outliers y patrones interesantes en el conjunto de datos.
-   - Generación de nubes de palabras para comprender las palabras más frecuentes en los títulos de los juegos.
+   - Explorando el sentimiento de las reseñas de los usuarios encontramos este top generos aceptados por la comunidad:
+   
+   <img src="src/EDA1.PNG">
+- Explorando la cantidad de comentarios positivos por año, vemos que hay un pico en el año 2014 y un considerable descenso para el siguente año:
+  
+  <img src="src/EDA2.PNG">
 
+- Explorando el tiempo de juego por genero nos encontramos un ligero cambio en el top. 
+  
+  <img src="src/EDA3.PNG">
+  
+  - Podemos concluir que el genero Action junto con Multiplayer y CO-OP, encontramos buenas reseñas de usuarios sumados a la popularidad en horas de juego, por lo que si consideramos el desarrollo de un juego con estos géneros, podriamos encontrarnos con una gran audiencia y aceptación, no obstante debido a la caida de reseñas en el ultimo año 2015, tendriamos que realizar el mismo analisis con datos actualizados para confirmar los generos más demandados.
+
+- Como resultado tendiramos el siguiente top de juegos que se encuentran dentro de los generos Action, Multiplayer y CO-OP.
+  
+  <img src="src/EDA4.PNG">
 5. **Modelo de Aprendizaje Automático:**
    
    - Implementación de al menos uno de los sistemas de recomendación propuestos:
